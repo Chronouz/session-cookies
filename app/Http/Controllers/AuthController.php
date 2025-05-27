@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class AuthController extends Controller
 {
@@ -14,8 +15,12 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $request->validate(['username' => 'required']);
-        session(['username' => $request->username]);
-        return redirect('/dashboard');
+        $user = User::where('username', $request->username)->first();
+        if ($user) {
+            session(['username' => $user->username]);
+            return redirect('/dashboard');
+        }
+        return back()->withErrors(['username' => 'User tidak ditemukan']);
     }
 
     public function dashboard()
