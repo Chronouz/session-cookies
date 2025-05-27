@@ -3,6 +3,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SessionCookieController;
 use App\Http\Controllers\AuthController;
 
+Route::get('/', function () {
+    return redirect('/login');
+});
+
 Route::get('/set-session', [SessionCookieController::class, 'setSession']);
 Route::get('/get-session', [SessionCookieController::class, 'getSession']);
 Route::get('/clear-session', [SessionCookieController::class, 'clearSession']);
